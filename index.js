@@ -23,15 +23,15 @@ HtmlWebpackPluginReturn.prototype.apply = function(compiler) {
         compilation.plugin('html-webpack-plugin-after-emit', function (htmlPluginData, callback) {
             var op  = htmlPluginData.plugin.options;
 
-            var from = path.resolve(self.options.output) + '/' + op.filename;
-            var to  = op.template.split('!');
-            fs.writeFile(to, htmlPluginData.html.source(), function(err){
+            var output_tmp  = path.resolve(self.options.output, op.filename);
+            var path_return = op.template.split('!');
+            fs.writeFile(path_return[1], htmlPluginData.html.source(), function(err){
                 if(err)
                     callback(err);
                 else
                     callback(null);
             });
-            fs.unlink(from, function(err){
+            fs.unlink(output_tmp, function(err){
                 console.log('err',err);
             });
             // callback(null);
