@@ -4,7 +4,8 @@
  */
 // HtmlWebpackPluginReturn.js
 
-var fs = require('fs');
+var fs      = require('fs');
+var path    = require('path');
 
 function HtmlWebpackPluginReturn(options) {
     this.options = options;
@@ -22,7 +23,7 @@ HtmlWebpackPluginReturn.prototype.apply = function(compiler) {
         compilation.plugin('html-webpack-plugin-after-emit', function (htmlPluginData, callback) {
             var op  = htmlPluginData.plugin.options;
 
-            var from = self.options.output + op.filename;
+            var from = path.resolve(self.options.output) + op.filename;
             var to  = op.template.split('!');
 
             fs.rename(from, to[1], function(err){
