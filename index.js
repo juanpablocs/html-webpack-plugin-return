@@ -7,11 +7,11 @@
 var mv = require('mv');
 
 function HtmlWebpackPluginReturn(options) {
-
+    this.options = options;
 }
 
 HtmlWebpackPluginReturn.prototype.apply = function(compiler) {
-
+    var self = this;
     compiler.plugin('compilation', function(compilation) {
 
         compilation.plugin('html-webpack-plugin-before-html-processing', function(htmlPluginData, callback) {
@@ -22,7 +22,7 @@ HtmlWebpackPluginReturn.prototype.apply = function(compiler) {
         compilation.plugin('html-webpack-plugin-after-emit', function (htmlPluginData, callback) {
             var op = htmlPluginData.plugin.options;
             var p = op.template.split('!');
-            mv(options.output + op.filename, p[1], function(err){
+            mv(self.options.output + op.filename, p[1], function(err){
                 if(err)
                     callback(err);
             });
