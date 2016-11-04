@@ -31,9 +31,7 @@ HtmlWebpackPluginReturn.prototype.apply = function(compiler) {
                 else
                     callback(null);
             });
-            fs.unlink(output_tmp, function(err){
-                console.log('err',err);
-            });
+            
             // callback(null);
         });
     });
