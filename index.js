@@ -4,7 +4,7 @@
  */
 // HtmlWebpackPluginReturn.js
 
-var mv = require('mv');
+var fs = require('fs');
 
 function HtmlWebpackPluginReturn(options) {
     this.options = options;
@@ -20,17 +20,18 @@ HtmlWebpackPluginReturn.prototype.apply = function(compiler) {
             callback(null, htmlPluginData);
         });
         compilation.plugin('html-webpack-plugin-after-emit', function (htmlPluginData, callback) {
-            var op = htmlPluginData.plugin.options;
-            var p = op.template.split('!');
+            var op  = htmlPluginData.plugin.options;
+
             var from = self.options.output + op.filename;
-            var to = p[1];
-            console.log('from',from);
-            console.log('to',to);
-            mv(from, to, function(err){
+            var to  = op.template.split('!');
+
+            fs.rename(from, to[1], function(err){
                 if(err)
                     callback(err);
+                else
+                    callback(null);
             });
-            callback(null);
+            // callback(null);
         });
     });
 };
