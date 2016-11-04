@@ -25,13 +25,14 @@ HtmlWebpackPluginReturn.prototype.apply = function(compiler) {
 
             var from = path.resolve(self.options.output) + '/' + op.filename;
             var to  = op.template.split('!');
-
-            fs.rename(from, to[1], function(err){
-                if(err)
-                    callback(err);
-                else
-                    callback(null);
-            });
+            setTimeout(function(){
+                fs.rename(from, to[1], function(err){
+                    if(err)
+                        callback(err);
+                    else
+                        callback(null);
+                });
+            },1000);
             // callback(null);
         });
     });
