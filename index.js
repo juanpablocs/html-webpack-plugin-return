@@ -22,7 +22,11 @@ HtmlWebpackPluginReturn.prototype.apply = function(compiler) {
         compilation.plugin('html-webpack-plugin-after-emit', function (htmlPluginData, callback) {
             var op = htmlPluginData.plugin.options;
             var p = op.template.split('!');
-            mv(self.options.output + op.filename, p[1], function(err){
+            var from = self.options.output + op.filename;
+            var to = p[1];
+            console.log('from',from);
+            console.log('to',to);
+            mv(from, to, function(err){
                 if(err)
                     callback(err);
             });
